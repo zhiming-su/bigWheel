@@ -1,6 +1,9 @@
 <script setup>
 import HelloWorld from './components/HelloWorld.vue'
 import { RouterView } from "vue-router";
+/*import { getCurrentInstance } from 'vue'
+console.log(getCurrentInstance())
+console.log(this.$store)*/
 </script>
 
 <template>
