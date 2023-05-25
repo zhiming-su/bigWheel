@@ -19,6 +19,7 @@ vue2 中可以通过 this.$store.xxx 的方式拿到 store 的实例对象。
 
 vue3 中的 setup 在 beforecreate 和 created 前执行，此时 vue对象还未被创建，没有了之前的this，所以此处我们需要用到另一种方法来获取到 store 对象。*/
 console.log(store.state.count)
+console.log(location.href)
 console.log(store.commit('increment',100))
 console.log(store.dispatch('incrementAsync',1))
 </script>
