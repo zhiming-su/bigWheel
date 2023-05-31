@@ -1,12 +1,15 @@
 <template>
-  <button style="background: crimson" @click="myRouter.push({
+<!--  <button style="background: crimson" @click="myRouter.push({
   name: 'bigWheel',
   query: { drawtype: 0 }
 })">惩罚</button>
   <button @click="myRouter.push({
   name: 'bigWheel',
   query: { drawtype: 1 }
-})" style="background: gold">奖励</button>
+})" style="background: gold">奖励</button>-->
+  <router-link  active-class="active" to="/bigWheel?drawtype=0">惩罚</router-link>
+  <router-link  active-class="active" to="/bigWheel?drawtype=1">奖励</router-link>
+  <router-view></router-view>
 </template>
 <script setup>
 import {useRouter} from "vue-router";
@@ -23,3 +26,6 @@ console.log(location.href)
 console.log(store.commit('increment',100))
 console.log(store.dispatch('incrementAsync',1))
 </script>
+<style>
+
+</style>

@@ -16,7 +16,10 @@ console.log(this.$store)*/
     </a>
   </div>
   <HelloWorld msg="Vite + Vue" />-->
-  <RouterView/>
+<!--  <RouterView/>-->
+  <router-link  active-class="active" to="/bigWheel?drawtype=0" exact>惩罚</router-link>
+  <router-link  active-class="active" to="/bigWheel?drawtype=1" exact>奖励</router-link>
+  <router-view></router-view>
 </template>
 
 <style scoped>
@@ -31,5 +34,8 @@ console.log(this.$store)*/
 }
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
+}
+.active{
+  background: yellowgreen;
 }
 </style>

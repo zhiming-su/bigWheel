@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+  <style type="text/css">
+    body, html{width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+    #allmap {width: 2000px;height: 1000px;overflow: hidden;margin:0;font-family:"微软雅黑";}
+    #allmap-right {background-color: beige;width: 1200px;height: 1000px;}
+    /*background-image: url(./user2.jpg);background-repeat:no-repeat*/
+    p{color: azure;font-size: 24px}
+    .content {display: flex;flex-direction:row}
+    .table {border-color: red}
+  </style>
+  <script src="https://mapopen.bj.bcebos.com/github/BMapGLLib/TrackAnimation/src/TrackAnimation.min.js"></script>
+  <script type="text/javascript" src="https://api.map.baidu.com/api?type=webgl&v=1.0&ak=3O4az1aGzAU8pDSx5BBi1QtCie7BYG37"></script>
+  <title>飞行模拟</title>
+
+</head>
+<body>
+<div class="content">
+  <div id="allmap"></div>
+  <div id="allmap-right" class="right-div">
+
+    <h4 style="text-align:center;color: red "  >飞行时相关数据</h4>
+    <table border="2"
+           cellpadding="50"
+           style="text-align:center;width:500px ">
+      <th >属性</th>
+      <th>数据</th>
+      <tr>
+        <td>速度</td>
+        <td style="color: blue;" id="time1">500</td>
+      </tr>
+      <tr>
+        <td>高度</td>
+        <td style="color: chocolate;" id="time2">2300</td>
+      </tr>
+      <tr>
+        <td>主板电压</td>
+        <td style="color: cyan;"  id="time3">5000</td>
+      </tr>
+      <tr>
+        <td>Dist to Home</td>
+        <td style="color: mediumorchid;" id="time4">0.03</td>
+      </tr>
+      <tr>
+        <td>磁场</td>
+        <td style="color: yellowgreen;" id="time5">511.36</td>
+      </tr>
+      <tr>
+        <td>迎角</td>
+        <td style="color: blueviolet;" id="time6">3.51</td>
+      </tr>
+    </table>
+  </div>
+  </div>
+</body>
+</html>
+<script type="text/javascript">
+  setInterval(changeTime,1000)
+  var a=100;
+  function changeTime(){
+    var time1 = (Math.floor(Math.random() * (550 - 450)) + 450).toFixed(2)
+    // console.log('11111111',time)
+    var oVal1 = document.getElementById('time1');
+    oVal1.innerHTML = time1;
+
+    var time2 = (Math.floor(Math.random() * (3000 - 2500)) + 2500).toFixed(2)
+    var oVal2 = document.getElementById('time2');
+    oVal2.innerHTML = time2;
+
+    var time3 = (Math.floor(Math.random() * (5005 - 4995)) + 4995).toFixed(2)
+    var oVal3 = document.getElementById('time3');
+    oVal3.innerHTML = time3;
+
+
+    var time4 = (Math.floor(Math.random() * (0.5 - 0.1)) + 0.1).toFixed(2)
+    var oVal4 = document.getElementById('time4');
+    oVal4.innerHTML = time4;
+
+    var time5 = (Math.floor(Math.random() * (510 - 495)) + 495).toFixed(2)
+    var oVal5 = document.getElementById('time5');
+    oVal5.innerHTML = time5;
+
+    var time6 = (Math.floor(Math.random() * (6 - 2)) + 2).toFixed(2)
+    var oVal6 = document.getElementById('time6');
+    oVal6.innerHTML = time6;
+
+}
+  // GL版命名空间为BMapGL
+  // 按住鼠标右键，修改倾斜角和角度
+  var bmap = new BMapGL.Map("allmap");    // 创建Map实例
+  bmap.centerAndZoom(new BMapGL.Point(116.29931131508742, 40.04733690347144), 18);  // 初始化地图,设置中心点坐标和地图级别
+  bmap.enableScrollWheelZoom(true);     // 开启鼠标滚轮缩放
+  bmap.setMapType(BMAP_EARTH_MAP);
+  var path = [{//起点和终点的经纬度
+    'lng': 116.29931131508742,
+    'lat': 40.04733690347144
+  }, {
+    'lng': 116.2974669981613,
+    'lat': 40.048650892845274
+  }
+  ,{
+    'lng':116.29886238119673,
+    'lat':40.04987620639946
+  }
+  ];
+  // var myIcon = new BMapGL.Icon("/img/ji.png", new BMapGL.Size(16, 16, {    //小车图片
+  //   //offset: new BMap.Size(0, -5),    //相当于CSS精灵
+  //   imageOffset: new BMapGL.Size(0, 0)    //图片的偏移量。为了是图片底部中心对准坐标点。
+  // }));
+  var point = [];
+  for (var i = 0; i < path.length; i++) {
+    point.push(new BMapGL.Point(path[i].lng, path[i].lat));
+  }//从起点到终点
+
+  var pl = new BMapGL.Polyline(point,{strokeColor :'red' ,strokeWeight:5});
+  setTimeout('start()', 3000);
+  function start () {
+    trackAni = new BMapGLLib.TrackAnimation(bmap, pl, {
+      overallView: true,
+      tilt: 30,
+      duration: 10000,
+      delay: 100
+    });
+    trackAni.start();
+  }
+  bmap.addEventListener('click', function (e) {
+    alert('点击位置经纬度：' + e.latlng.lng + ',' + e.latlng.lat);
+  });
+</script>
